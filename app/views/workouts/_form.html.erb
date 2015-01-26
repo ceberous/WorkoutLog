@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+
+		<%= simple_form_for @workout do |f| %>
+
+			<% if @workout.errors.any? %>
+		    	<div id="error_explanation">
+		      		<h2><%= pluralize(@workout.errors.count, "error") %> prohibited this todo_list from being saved:</h2>
+
+		      		<ul>
+		      			<% @workout.errors.full_messages.each do |message| %>
+		        			<li><%= message %></li>
+		      			<% end %>
+		      		</ul>
+		    	</div>
+		  	<% end %>
+
+		  	<%= f.input :date , placeholder: "Date" %>
+		  	
+		  	<%= f.input :workout , placeholder: "Which Muscle Group?" , class: "form-control" %>
+		  	<%= f.input :mood , placeholder: "Your Mood?" , class: "form-control" %>
+		  	<%= f.input :length , placeholder: "How long did it last?" , class: "form-control" %>
+
+		  	<%= f.submit class: "btn btn-success form-control" %>
+
+		<% end %>
+
+	</div>
+</div>

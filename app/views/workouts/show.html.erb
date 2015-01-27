@@ -1,9 +1,62 @@
 <div class="row">
 	<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
 	
-		<h1 class="tcenter"><%= @workout.date %></h1>
-		<h4 class="tcenter"><%= @workout.workout %></h4>
-		
-		
+		<div class="tcenter">
+			<% date = @workout.date.day.ordinalize %>
+			<h1 class="tcenter"><%= @workout.date.strftime("%A, %B #{date}") %></h1>
+			<h4 class="tcenter"><%= @workout.workout %></h4>
+
+			<%= link_to "Edit" , edit_workout_path(@workout) %> | 
+			<%= link_to "Delete" , workout_path(@workout) , method: :delete , data: {confirm: "Are You Sure?"} %>
+		</div>
+
+		<br>
+
+		<div class="tcenter exercises">
+			
+			<% if @workout.exercises.present? %>
+				<h2>Exercises</h2>
+				<% count = 1 %>
+				<table class="table table-bordered">
+					<thead>
+						<th>#</th>
+						<th>Name</th>
+						<th>Sets</th>
+						<th>Reps</th>
+					</thead>
+				
+					<tbody>
+						<% @workout.exercises.each do |exercise| %>
+						<tr class="touchDelete">
+							<th><%= count %></th>
+							<td><%= link_to exercise.name , edit_workout_exercise_path(@workout,exercise) %></td>
+							<td><%= exercise.sets %></td>
+							<td><%= exercise.reps %></td>
+							<td style="display:none;" class="displayDelete" ><%= link_to "Delete" , workout_exercise_path(@workout,exercise) , method: :delete , data: {confirm: "Are You Sure?"}  %>
+							</td>
+						</tr>
+						<% count += 1 %>
+						<% end %>
+					</tbody>
+				</table>
+			<% end %>
+			
+			
+			<h3>Add an Exercise</h3>
+			<%= render "exercises/form" %>
+		</div>
+
 	</div>
 </div>
+
+
+<script>
+$('document').ready(function() {
+	$('.touchDelete').on("touchmove" , function(e) {
+		$('.displayDelete').toggle("fast");
+	});
+	$('.touchDelete').on("click" , function(e) {
+		$('.displayDelete').toggle("fast");
+	});
+});
+</script>

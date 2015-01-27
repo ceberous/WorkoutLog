@@ -1,1 +1,18 @@
-<h1 class="tcenter">This is the Workout Index Page</h1>
+<div class="row">
+<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+	
+	<h1 class="tcenter">Logged Workouts for #{user}</h1><br>
+
+	<div class="tcenter">
+	<% @workouts.each do |workout| %>
+		<% date = workout.date.day.ordinalize %>
+		<% string =  workout.date.strftime("%A, %B #{date}")%>
+
+		<p><%= link_to "#{string}" , workout %></p>
+		<p><%= workout.workout %></p>
+
+	<% end %>
+	</div>
+
+</div>
+</div>
